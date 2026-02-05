@@ -1,0 +1,1 @@
+export { BreweryTable } from './BreweryTable';
