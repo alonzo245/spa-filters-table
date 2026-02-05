@@ -30,7 +30,7 @@ export function BreweryTable() {
   }
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto -mx-3 sm:-mx-4 md:mx-0">
       <Table
         aria-label="Breweries table"
         className="min-w-full divide-y divide-gray-700 dark:divide-gray-700"

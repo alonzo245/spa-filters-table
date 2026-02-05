@@ -6,7 +6,7 @@ export function HomePage() {
   return (
     <>
       <FilterControls />
-      <div className="bg-gray-800 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-6">
+      <div className="bg-gray-800 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-4 sm:mb-6">
         <BreweryTable />
       </div>
       <Pagination />

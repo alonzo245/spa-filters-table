@@ -23,17 +23,17 @@ export const BreweryTableRow = memo(({ brewery, onSelect }: BreweryTableRowProps
         'hover:bg-gray-700 dark:hover:bg-gray-700 focus:bg-gray-700 dark:focus:bg-gray-700 focus:outline-none'
       )}
     >
-      <Cell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 dark:text-gray-100">
-        {brewery.name}
+      <Cell className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm font-medium text-gray-100 dark:text-gray-100">
+        <span className="truncate block">{brewery.name}</span>
       </Cell>
-      <Cell className="px-6 py-4 whitespace-nowrap text-sm text-gray-400 dark:text-gray-400">
-        {brewery.brewery_type}
+      <Cell className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-gray-400 dark:text-gray-400">
+        <span className="truncate block">{brewery.brewery_type}</span>
       </Cell>
-      <Cell className="px-6 py-4 whitespace-nowrap text-sm text-gray-400 dark:text-gray-400">
-        {brewery.city}
+      <Cell className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-gray-400 dark:text-gray-400">
+        <span className="truncate block">{brewery.city}</span>
       </Cell>
-      <Cell className="px-6 py-4 whitespace-nowrap text-sm text-gray-400 dark:text-gray-400">
-        {brewery.state}
+      <Cell className="px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-sm text-gray-400 dark:text-gray-400">
+        <span className="truncate block">{brewery.state}</span>
       </Cell>
     </Row>
   );
