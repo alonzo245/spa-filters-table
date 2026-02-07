@@ -3,10 +3,14 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Pagination } from '../Pagination';
 import { useBreweryStore } from '../../../store/breweryStore';
+import { useBreweries } from '../../BreweryTable/hooks/useBreweries';
 
-// Mock the store
 vi.mock('../../../store/breweryStore', () => ({
   useBreweryStore: vi.fn(),
+}));
+
+vi.mock('../../BreweryTable/hooks/useBreweries', () => ({
+  useBreweries: vi.fn(),
 }));
 
 describe('Pagination', () => {
@@ -14,9 +18,13 @@ describe('Pagination', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (useBreweryStore as any).mockReturnValue({
+    (useBreweryStore as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       currentPage: 1,
+      perPage: 20,
       setCurrentPage: mockSetCurrentPage,
+    });
+    (useBreweries as ReturnType<typeof vi.fn>).mockReturnValue({
+      data: Array(20),
     });
   });
 

@@ -4,13 +4,15 @@ import { clsx } from 'clsx';
 interface MobilePaginationProps {
   currentPage: number;
   canGoPrevious: boolean;
+  canGoNext: boolean;
   onPrevious: () => void;
   onNext: () => void;
 }
 
 export function MobilePagination({
-  currentPage,
+  currentPage: _currentPage,
   canGoPrevious,
+  canGoNext,
   onPrevious,
   onNext,
 }: MobilePaginationProps) {
@@ -30,7 +32,13 @@ export function MobilePagination({
       </Button>
       <Button
         onPress={onNext}
-        className="relative ml-2 sm:ml-3 inline-flex items-center rounded-md border border-gray-600 dark:border-gray-600 bg-gray-700 dark:bg-gray-700 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-200 dark:text-gray-200 hover:bg-gray-600 dark:hover:bg-gray-600"
+        isDisabled={!canGoNext}
+        className={clsx(
+          'relative ml-2 sm:ml-3 inline-flex items-center rounded-md border border-gray-600 dark:border-gray-600 bg-gray-700 dark:bg-gray-700 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium',
+          !canGoNext
+            ? 'text-gray-500 dark:text-gray-500 cursor-not-allowed'
+            : 'text-gray-200 dark:text-gray-200 hover:bg-gray-600 dark:hover:bg-gray-600'
+        )}
       >
         Next
       </Button>

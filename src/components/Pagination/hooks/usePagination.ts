@@ -1,15 +1,18 @@
 import { useCallback } from 'react';
 import { useBreweryStore } from '../../../store/breweryStore';
+import { useBreweries } from '../../BreweryTable/hooks/useBreweries';
 import { canGoToPrevious, getPreviousPage, getNextPage } from '../utils/paginationUtils';
 
 /**
  * Hook for managing pagination state and handlers
+ * Uses same React Query cache as BreweryTable to know if there is a next page
  */
 export function usePagination() {
-  const { currentPage, setCurrentPage } = useBreweryStore();
+  const { currentPage, perPage, setCurrentPage } = useBreweryStore();
+  const { data = [] } = useBreweries();
 
   const canGoPrevious = canGoToPrevious(currentPage);
-  const canGoNext = true; // Always can go to next page (API handles limits)
+  const canGoNext = data.length === perPage;
 
   const handlePrevious = useCallback(() => {
     if (canGoPrevious) {
@@ -18,8 +21,10 @@ export function usePagination() {
   }, [currentPage, canGoPrevious, setCurrentPage]);
 
   const handleNext = useCallback(() => {
-    setCurrentPage(getNextPage(currentPage));
-  }, [currentPage, setCurrentPage]);
+    if (canGoNext) {
+      setCurrentPage(getNextPage(currentPage));
+    }
+  }, [currentPage, canGoNext, setCurrentPage]);
 
   return {
     currentPage,

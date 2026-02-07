@@ -10,6 +10,7 @@ export function Pagination() {
   const {
     currentPage,
     canGoPrevious,
+    canGoNext,
     handlePrevious,
     handleNext,
   } = usePagination();
@@ -19,12 +20,14 @@ export function Pagination() {
       <MobilePagination
         currentPage={currentPage}
         canGoPrevious={canGoPrevious}
+        canGoNext={canGoNext}
         onPrevious={handlePrevious}
         onNext={handleNext}
       />
       <DesktopPagination
         currentPage={currentPage}
         canGoPrevious={canGoPrevious}
+        canGoNext={canGoNext}
         onPrevious={handlePrevious}
         onNext={handleNext}
       />

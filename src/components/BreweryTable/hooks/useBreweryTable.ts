@@ -5,8 +5,8 @@ import { useBreweries } from './useBreweries';
 import { useProcessedBreweries } from './useProcessedBreweries';
 
 /**
- * Main hook for BreweryTable component
- * Combines data fetching, processing, and event handlers
+ * Main hook for BreweryTable component.
+ * Fetches page data from API (pagination + sort only); filters are applied client-side.
  */
 export function useBreweryTable() {
   const {
@@ -18,10 +18,9 @@ export function useBreweryTable() {
     setSelectedBreweryId,
   } = useBreweryStore();
 
-  const { data: breweries = [], isLoading, error } = useBreweries();
-
-  const processedBreweries = useProcessedBreweries({
-    breweries,
+  const { data: rawBreweries = [], isLoading, error } = useBreweries();
+  const breweries = useProcessedBreweries({
+    breweries: rawBreweries,
     filters,
     sortField,
     sortDirection,
@@ -47,7 +46,7 @@ export function useBreweryTable() {
   );
 
   return {
-    breweries: processedBreweries,
+    breweries,
     isLoading,
     error,
     sortField,
