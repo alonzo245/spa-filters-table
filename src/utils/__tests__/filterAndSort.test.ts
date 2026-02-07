@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { filterBreweries, sortBreweries } from '../filterAndSort';
 import { mockBreweries } from '../../test/mockData';
-import { Filters, SortField, SortDirection } from '../../types/brewery';
+import { Filters } from '../../types/brewery';
 
 describe('filterBreweries', () => {
   it('should return all breweries when no filters are applied', () => {

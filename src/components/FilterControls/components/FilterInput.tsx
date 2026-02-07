@@ -10,7 +10,7 @@ interface FilterInputProps {
 }
 
 export function FilterInput({
-  field,
+  field: _field,
   label,
   placeholder,
   value,
