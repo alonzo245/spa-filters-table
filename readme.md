@@ -1,99 +1,131 @@
-# Brewery Browser App
+# Brewery Browser
 
-A modern React application for browsing breweries using the Open Brewery DB API.
+A React SPA for browsing breweries using the [Open Brewery DB API](https://www.openbrewerydb.org/). Pagination and sorting are server-side; filters run client-side on the current page.
 
 ## Features
 
-- **Brewery Table with Pagination**: Browse breweries in a paginated table view
-- **Modal Details**: Click any brewery row to view detailed information
-- **Sorting & Filtering**: Sort and filter breweries by name, type, city, and state
-- **Interactive Map**: View brewery locations on an interactive map (when coordinates are available)
+- **Paginated table** – Browse breweries with previous/next page controls (data fetched per page from the API).
+- **Client-side filters** – Filter the current page by name, type, city, and state (no extra API calls).
+- **Server-side sort** – Sort by name, type, city, or state via the API; column headers toggle asc/desc.
+- **Brewery details** – Click a row to open a modal with address, phone, website, and map (when coordinates exist).
+- **Responsive layout** – Layout and pagination adapt for mobile and desktop.
 
 ## Tech Stack
 
-- **React 18** - UI library
-- **Vite** - Build tool and dev server
-- **TypeScript** - Type safety
-- **TanStack Query** - Data fetching and caching
-- **Tailwind CSS** - Styling
-- **React Aria Components** - Accessible UI components
-- **React Router** - Routing (configured for future use)
-- **Zustand** - State management
-- **Leaflet.js** - Interactive maps
-- **clsx** - Conditional class names
+| Category        | Technology                |
+|----------------|---------------------------|
+| UI             | React 18, React Aria Components |
+| Build          | Vite 5                    |
+| Language       | TypeScript                |
+| Data           | TanStack Query, Zustand   |
+| Routing        | React Router 6            |
+| Styling        | Tailwind CSS, clsx        |
+| Map            | Leaflet, React Leaflet    |
+| Testing        | Vitest, Testing Library   |
+| Components     | Storybook                 |
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ and npm/yarn/pnpm
+- **Node.js 18+** and npm
 
-### Installation
+### Install and run
 
-1. Install dependencies:
 ```bash
 npm install
-```
-
-2. Start the development server:
-```bash
 npm run dev
 ```
 
-3. Open your browser and navigate to `http://localhost:5173`
+Open [http://localhost:5173](http://localhost:5173).
 
-### Building for Production
+### Scripts
+
+| Command           | Description                    |
+|------------------|--------------------------------|
+| `npm run dev`    | Start dev server               |
+| `npm run build`  | Production build → `dist/`     |
+| `npm run preview`| Serve production build locally |
+| `npm run lint`   | Run ESLint                     |
+| `npm run test`   | Run tests (Vitest)             |
+| `npm run test:ui`| Vitest UI                      |
+| `npm run test:coverage` | Coverage report         |
+
+### Building for production
 
 ```bash
 npm run build
 ```
 
-The built files will be in the `dist` directory.
-
-### Preview Production Build
+Output is in `dist/`. To preview:
 
 ```bash
 npm run preview
 ```
 
+### Deploying to GitHub Pages
+
+Deployment is set up via GitHub Actions.
+
+1. In the repo: **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**.
+2. Push to `main` or run the **Deploy to GitHub Pages** workflow from the **Actions** tab.
+
+The site will be available at:
+
+`https://<username>.github.io/<repo-name>/`
+
+To build locally with the same base path (e.g. to test deployment):
+
+```bash
+VITE_BASE_PATH=/your-repo-name/ npm run build
+npm run preview
+```
+
+Then open the URL shown (e.g. `http://localhost:4173/your-repo-name/`).
+
 ## Project Structure
 
 ```
 src/
-├── components/          # React components
-│   ├── BreweryTable.tsx    # Main table component
-│   ├── BreweryModal.tsx    # Modal for brewery details
-│   ├── BreweryMap.tsx      # Leaflet map component
-│   ├── FilterControls.tsx  # Filter inputs
-│   └── Pagination.tsx      # Pagination controls
-├── services/            # API services
-│   └── api.ts             # Open Brewery DB API client
-├── store/              # Zustand stores
-│   └── breweryStore.ts   # Application state
-├── types/              # TypeScript types
-│   └── brewery.ts        # Brewery data types
-├── utils/              # Utility functions
-│   └── filterAndSort.ts # Filtering and sorting logic
-├── App.tsx             # Main app component
-├── main.tsx            # Entry point
-└── index.css           # Global styles
+├── components/           # Feature components
+│   ├── BreweryTable/     # Table, sorting, data hooks
+│   ├── BreweryModal/     # Detail modal + map
+│   ├── BreweryMap/       # Leaflet map
+│   ├── FilterControls/   # Name, type, city, state filters
+│   ├── Pagination/       # Page controls
+│   ├── Layout.tsx
+│   └── ErrorBoundary.tsx
+├── routes/               # Pages and layout
+│   ├── _layout.tsx
+│   └── index.tsx         # Home (table + filters + pagination)
+├── services/
+│   └── api.ts            # Open Brewery DB client (list, by id)
+├── store/
+│   └── breweryStore.ts   # Filters, page, sort, selected brewery
+├── types/
+│   └── brewery.ts
+├── utils/
+│   └── filterAndSort.ts  # Client-side filter/sort helpers
+├── test/                 # Test setup and mocks
+├── App.tsx
+├── main.tsx
+└── index.css
 ```
 
 ## Usage
 
-1. **Viewing Breweries**: The table displays breweries fetched from the API with pagination controls at the bottom.
-
-2. **Filtering**: Use the filter inputs at the top to filter breweries by name, type, city, or state. Filters update the table dynamically.
-
-3. **Sorting**: Click on any column header to sort by that field. Click again to reverse the sort order.
-
-4. **Viewing Details**: Click on any brewery row to open a modal with detailed information including address, phone, website, and location map.
-
-5. **Map View**: If a brewery has latitude/longitude coordinates, a map will be displayed in the modal showing its location.
+1. **Table** – Shows one page of breweries. Use **Previous/Next** to change pages (each page is a new API request).
+2. **Filters** – Type in name, type, city, or state to filter the **current page** only; no new request is made.
+3. **Sort** – Click a column header to sort by that field (request is sent to the API).
+4. **Details** – Click a row to open the modal with full details and map when coordinates exist.
 
 ## API
 
-This application uses the [Open Brewery DB API](https://www.openbrewerydb.org/), a free and open-source dataset of breweries.
+Uses the free [Open Brewery DB API](https://www.openbrewerydb.org/documentation): list (with `page`, `per_page`, `sort`) and single-brewery by id. Filtering by name/type/city/state is done in the app on the current page.
+
+## Testing
+
+Unit and component tests use **Vitest** and **Testing Library**. See [TESTING.md](./TESTING.md) for how to run tests and coverage.
 
 ## License
 

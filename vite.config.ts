@@ -2,7 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
+// For GitHub Pages: set VITE_BASE_PATH to '/your-repo-name/' (trailing slash)
 export default defineConfig({
+  base: process.env.VITE_BASE_PATH || '/',
   plugins: [react()],
   build: {
     // Production optimizations

@@ -8,10 +8,11 @@ import './index.css'
 // Enable dark mode by default
 document.documentElement.classList.add('dark')
 
+// BASE_URL has trailing slash when using a base path (e.g. GitHub Pages)
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <App />
       </BrowserRouter>
     </ErrorBoundary>
